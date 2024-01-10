@@ -467,7 +467,7 @@ export default class LinearGradientSlider extends React.Component {
           style={[
             styles.step,
             this.props.stepStyle,
-            { left: stepLength * index - 3 },
+            { left: index === 0 ? 0 : stepLength * index - 3 },
           ]}
         >
           {/* {this.props.showStepMarkers &&
