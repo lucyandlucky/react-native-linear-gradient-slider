@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 import {
   StyleSheet,
@@ -15,13 +16,13 @@ import DefaultMarker from './DefaultMarker';
 import DefaultLabel from './DefaultLabel';
 import { createArray, valueToPosition, positionToValue } from './converters';
 
-export default class MultiSlider extends React.Component {
+export default class LinearGradientSlider extends React.Component {
   static defaultProps = {
     values: [0],
     onValuesChangeStart: () => {},
-    onValuesChange: values => {},
-    onValuesChangeFinish: values => {},
-    onMarkersPosition: values => {},
+    onValuesChange: (values) => {},
+    onValuesChangeFinish: (values) => {},
+    onMarkersPosition: (values) => {},
     step: 1,
     min: 0,
     max: 10,
@@ -73,7 +74,7 @@ export default class MultiSlider extends React.Component {
       createArray(this.props.min, this.props.max, this.props.step);
     this.stepLength = this.props.sliderLength / (this.optionsArray.length - 1);
 
-    var initialValues = this.props.values.map(value =>
+    var initialValues = this.props.values.map((value) =>
       valueToPosition(
         value,
         this.optionsArray,
@@ -83,7 +84,7 @@ export default class MultiSlider extends React.Component {
     );
 
     var tempStepsAs = {};
-    this.props.stepsAs.forEach(step => {
+    this.props.stepsAs.forEach((step) => {
       if (step?.index !== undefined) {
         tempStepsAs[step?.index] = step;
       }
@@ -137,15 +138,15 @@ export default class MultiSlider extends React.Component {
     };
 
     this._panResponderBetween = customPanResponder(
-      gestureState => {
+      (gestureState) => {
         this.startOne(gestureState);
         this.startTwo(gestureState);
       },
-      gestureState => {
+      (gestureState) => {
         this.moveOne(gestureState);
         this.moveTwo(gestureState);
       },
-      gestureState => {
+      (gestureState) => {
         this.endOne(gestureState);
         this.endTwo(gestureState);
       },
@@ -181,7 +182,7 @@ export default class MultiSlider extends React.Component {
     }
   };
 
-  moveOne = gestureState => {
+  moveOne = (gestureState) => {
     if (!this.props.enabledOne) {
       return;
     }
@@ -254,7 +255,7 @@ export default class MultiSlider extends React.Component {
     }
   };
 
-  moveTwo = gestureState => {
+  moveTwo = (gestureState) => {
     if (!this.props.enabledTwo) {
       return;
     }
@@ -323,7 +324,7 @@ export default class MultiSlider extends React.Component {
     }
   };
 
-  endOne = gestureState => {
+  endOne = (gestureState) => {
     if (gestureState.moveX === 0 && this.props.onToggleOne) {
       this.props.onToggleOne();
       return;
@@ -351,7 +352,7 @@ export default class MultiSlider extends React.Component {
     );
   };
 
-  endTwo = gestureState => {
+  endTwo = (gestureState) => {
     if (gestureState.moveX === 0 && this.props.onToggleTwo) {
       this.props.onToggleTwo();
       return;
@@ -379,10 +380,8 @@ export default class MultiSlider extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const {
-      positionOne: prevPositionOne,
-      positionTwo: prevPositionTwo,
-    } = prevState;
+    const { positionOne: prevPositionOne, positionTwo: prevPositionTwo } =
+      prevState;
 
     const { positionOne, positionTwo } = this.state;
 
@@ -468,18 +467,18 @@ export default class MultiSlider extends React.Component {
           style={[
             styles.step,
             this.props.stepStyle,
-            { left: stepLength * index },
+            { left: stepLength * index - 3 },
           ]}
         >
-          {this.props.showStepMarkers &&
+          {/* {this.props.showStepMarkers &&
             index !== 0 &&
             index !== this.optionsArray.length - 1 && (
               <View style={markerStyles} />
-            )}
+            )} */}
           {this.props.showStepLabels && (
             <Text
-              style={textStyles}
-            >{`${step.prefix}${step.stepLabel}${step.suffix}`}</Text>
+              style={[textStyles, { fontSize: 10 }]}
+            >{`${step?.prefix}${step?.stepLabel}${step?.suffix}`}</Text>
           )}
         </View>
       );
@@ -515,12 +514,8 @@ export default class MultiSlider extends React.Component {
 
     const Label = this.props.customLabel;
 
-    const {
-      slipDisplacement,
-      height,
-      width,
-      borderRadius,
-    } = this.props.touchDimensions;
+    const { slipDisplacement, height, width, borderRadius } =
+      this.props.touchDimensions;
     const touchStyle = {
       borderRadius: borderRadius || 0,
       ...(height && { height }),
@@ -548,33 +543,34 @@ export default class MultiSlider extends React.Component {
     const body = (
       <React.Fragment>
         <View style={[styles.fullTrack, { width: sliderLength }]}>
-          <View
+          {/* <View
             style={[
               styles.track,
               this.props.trackStyle,
               trackOneStyle,
               { width: trackOneLength },
             ]}
+          /> */}
+          {/* Track */}
+          <LinearGradient
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0.6, y: 0 }}
+            colors={['#59EBB0', '#5652FF']}
+            style={[
+              styles.track,
+              this.props.trackStyle,
+              trackTwoStyle,
+              { width: sliderLength },
+            ]}
           />
-          <View
+          {/* <View
             style={[
               styles.track,
               this.props.trackStyle,
               trackTwoStyle,
               { width: trackTwoLength },
             ]}
-            {...(twoMarkers ? this._panResponderBetween.panHandlers : {})}
-          />
-          {twoMarkers && (
-            <View
-              style={[
-                styles.track,
-                this.props.trackStyle,
-                trackThreeStyle,
-                { width: trackThreeLength },
-              ]}
-            />
-          )}
+          /> */}
           {this.props.showSteps && this.getSteps()}
           <View
             style={[
@@ -586,7 +582,7 @@ export default class MultiSlider extends React.Component {
           >
             <View
               style={[styles.touch, touchStyle]}
-              ref={component => (this._markerOne = component)}
+              ref={(component) => (this._markerOne = component)}
               {...this._panResponderOne.panHandlers}
             >
               {isMarkersSeparated === false ? (
@@ -624,7 +620,7 @@ export default class MultiSlider extends React.Component {
             >
               <View
                 style={[styles.touch, touchStyle]}
-                ref={component => (this._markerTwo = component)}
+                ref={(component) => (this._markerTwo = component)}
                 {...this._panResponderTwo.panHandlers}
               >
                 {isMarkersSeparated === false ? (
@@ -697,42 +693,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   track: {
-    ...Platform.select({
-      ios: {
-        height: 2,
-        borderRadius: 2,
-        backgroundColor: '#A7A7A7',
-      },
-      android: {
-        height: 2,
-        backgroundColor: '#CECECE',
-      },
-      web: {
-        height: 2,
-        borderRadius: 2,
-        backgroundColor: '#A7A7A7',
-      },
-    }),
+    height: 6,
+    borderRadius: 6,
+    backgroundColor: '#A7A7A7',
   },
   selectedTrack: {
-    ...Platform.select({
-      ios: {
-        backgroundColor: '#095FFF',
-      },
-      android: {
-        backgroundColor: '#0D8675',
-      },
-      web: {
-        backgroundColor: '#095FFF',
-      },
-    }),
+    backgroundColor: '#095FFF',
   },
   markerContainer: {
     position: 'absolute',
     width: 48,
     height: 48,
     backgroundColor: 'transparent',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
   },
   topMarkerContainer: {
@@ -740,6 +713,7 @@ const styles = StyleSheet.create({
   },
   touch: {
     backgroundColor: 'transparent',
+    // backgroundColor: 'rgba(0,0,0,0.4)',
     justifyContent: 'center',
     alignItems: 'center',
   },

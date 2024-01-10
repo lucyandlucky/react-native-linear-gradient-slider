@@ -35,7 +35,7 @@ export interface LabelProps {
     twoMarkerPressed: boolean;
 }
 
-export interface MultiSliderProps {
+export interface LinearGradientSliderSliderProps {
     values?: number[];
 
     onValuesChange?: (values: number[]) => void;
@@ -96,4 +96,4 @@ export interface MultiSliderProps {
     vertical?: boolean;
 }
 
-export default class MultiSlider extends React.Component<MultiSliderProps> {}
+export default class LinearGradientSlider extends React.Component<LinearGradientSliderSliderProps> {}
