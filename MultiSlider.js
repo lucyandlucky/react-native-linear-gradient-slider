@@ -441,7 +441,7 @@ export default class LinearGradientSlider extends React.Component {
     }
   }
 
-  getSteps() {
+  getSteps(currentValue) {
     const stepLength = this.props.sliderLength / (this.optionsArray.length - 1);
     const textStyles = [
       styles.stepLabel,
@@ -461,12 +461,24 @@ export default class LinearGradientSlider extends React.Component {
 
     return this.optionsArray.map((number, index) => {
       var step = this.stepsAs[index];
+      const active = step?.stepLabel === currentValue
+
+      const commonTextStyle = {fontSize: 10}
+
+      const activeStyle = {
+        fontSize: 12,
+        color: '#5652FF'
+      }
+
+      const nextTextStyle = active ? {...activeStyle, ...commonTextStyle} : commonTextStyle
+       
       return (
         <View
           key={number}
           style={[
             styles.step,
             this.props.stepStyle,
+            {top: 10},
             { left: index === 0 ? 0 : stepLength * index - 3 },
           ]}
         >
@@ -477,7 +489,7 @@ export default class LinearGradientSlider extends React.Component {
             )} */}
           {this.props.showStepLabels && (
             <Text
-              style={[textStyles, { fontSize: 10 }]}
+              style={[textStyles, nextTextStyle]}
             >{`${step?.prefix}${step?.stepLabel}${step?.suffix}`}</Text>
           )}
         </View>
@@ -571,7 +583,7 @@ export default class LinearGradientSlider extends React.Component {
               { width: trackTwoLength },
             ]}
           /> */}
-          {this.props.showSteps && this.getSteps()}
+          {this.props.showSteps && this.getSteps(this.startOne.valueOne)}
           <View
             style={[
               styles.markerContainer,
