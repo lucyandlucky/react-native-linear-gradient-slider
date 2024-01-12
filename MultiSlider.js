@@ -16,7 +16,7 @@ import DefaultMarker from './DefaultMarker';
 import DefaultLabel from './DefaultLabel';
 import { createArray, valueToPosition, positionToValue } from './converters';
 
-export default class LinearGradientSlider extends React.Component {
+export default class MultiSlider extends React.Component {
   static defaultProps = {
     values: [0],
     onValuesChangeStart: () => {},
@@ -443,6 +443,7 @@ export default class LinearGradientSlider extends React.Component {
 
   getSteps(currentValue) {
     const stepLength = this.props.sliderLength / (this.optionsArray.length - 1);
+
     const textStyles = [
       styles.stepLabel,
       this.props.stepLabelStyle,
@@ -460,26 +461,34 @@ export default class LinearGradientSlider extends React.Component {
     ];
 
     return this.optionsArray.map((number, index) => {
+      const activeColor = Number(currentValue) <= 300 ? '#59EBB0' : '#5652FF';
       var step = this.stepsAs[index];
-      const active = step?.stepLabel === currentValue
+      const active = step?.stepLabel === currentValue;
 
-      const commonTextStyle = {fontSize: 10}
+      const commonTextStyle = { fontSize: 10 };
 
       const activeStyle = {
         fontSize: 12,
-        color: '#5652FF'
-      }
-
-      const nextTextStyle = active ? {...activeStyle, ...commonTextStyle} : commonTextStyle
-       
+        color: activeColor,
+        fontWeight: '700',
+      };
+      const nextTextStyle = active
+        ? { ...commonTextStyle, ...activeStyle }
+        : commonTextStyle;
+      const activePos = {
+        top: 8,
+        left: index === 0 ? 0 : stepLength * index - 5,
+      };
+      const pos = active ? activePos : {};
       return (
         <View
           key={number}
           style={[
             styles.step,
             this.props.stepStyle,
-            {top: 10},
+            { top: 10 },
             { left: index === 0 ? 0 : stepLength * index - 3 },
+            pos,
           ]}
         >
           {/* {this.props.showStepMarkers &&
@@ -490,7 +499,7 @@ export default class LinearGradientSlider extends React.Component {
           {this.props.showStepLabels && (
             <Text
               style={[textStyles, nextTextStyle]}
-            >{`${step?.prefix}${step?.stepLabel}${step?.suffix}`}</Text>
+            >{`${step.prefix}${step.stepLabel}${step.suffix}`}</Text>
           )}
         </View>
       );
@@ -583,7 +592,7 @@ export default class LinearGradientSlider extends React.Component {
               { width: trackTwoLength },
             ]}
           /> */}
-          {this.props.showSteps && this.getSteps(this.startOne.valueOne)}
+          {this.props.showSteps && this.getSteps(this.state.valueOne)}
           <View
             style={[
               styles.markerContainer,
