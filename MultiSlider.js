@@ -468,16 +468,13 @@ export default class MultiSlider extends React.Component {
       const commonTextStyle = { fontSize: 10 };
 
       const activeStyle = {
-        fontSize: 12,
         color: activeColor,
-        fontWeight: '700',
       };
       const nextTextStyle = active
         ? { ...commonTextStyle, ...activeStyle }
         : commonTextStyle;
       const activePos = {
-        top: 8,
-        left: index === 0 ? 0 : stepLength * index - 5,
+        left: index === 0 ? 0 : stepLength * index - 3,
       };
       const pos = active ? activePos : {};
       return (
