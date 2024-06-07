@@ -461,18 +461,14 @@ export default class MultiSlider extends React.Component {
     ];
 
     return this.optionsArray.map((number, index) => {
-      const activeColor = Number(currentValue) <= 300 ? '#59EBB0' : '#5652FF';
       var step = this.stepsAs[index];
+
+      const activeStyle = this.props.activeStepLabelStyle || {}
       const active = step?.stepLabel === currentValue;
 
-      const commonTextStyle = { fontSize: 10 };
-
-      const activeStyle = {
-        color: activeColor,
-      };
       const nextTextStyle = active
-        ? { ...commonTextStyle, ...activeStyle }
-        : commonTextStyle;
+        ? activeStyle
+        : {};
       const activePos = {
         left: index === 0 ? 0 : stepLength * index - 3,
       };
@@ -495,7 +491,7 @@ export default class MultiSlider extends React.Component {
             )} */}
           {this.props.showStepLabels && (
             <Text
-              style={[nextTextStyle,textStyles, { fontSize: 10 }]}
+              style={[textStyles, nextTextStyle]}
             >{`${step.prefix}${step.stepLabel}${step.suffix}`}</Text>
           )}
         </View>

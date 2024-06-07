@@ -4,7 +4,7 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.8
 import * as React from "react";
-import { ViewStyle } from "react-native";
+import { ViewStyle, TextStyle } from "react-native";
 
 
 export interface StepsAsProps {
@@ -73,7 +73,8 @@ export interface LinearGradientSliderSliderProps {
     markerStyle?: ViewStyle;
     pressedMarkerStyle?: ViewStyle;
     stepStyle?: ViewStyle;
-    stepLabelStyle?: ViewStyle;
+    stepLabelStyle?: TextStyle;
+    activeStepLabelStyle?: TextStyle;
     stepMarkerStyle?: ViewStyle;
     valuePrefix?: string;
     valueSuffix?: string;
