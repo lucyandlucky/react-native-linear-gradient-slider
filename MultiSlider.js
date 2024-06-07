@@ -495,7 +495,7 @@ export default class MultiSlider extends React.Component {
             )} */}
           {this.props.showStepLabels && (
             <Text
-              style={[textStyles, nextTextStyle]}
+              style={[nextTextStyle,textStyles, { fontSize: 10 }]}
             >{`${step.prefix}${step.stepLabel}${step.suffix}`}</Text>
           )}
         </View>
