@@ -559,7 +559,7 @@ export default class MultiSlider extends React.Component {
     const nextLinearGradientOptions = {
       start: {x:linearGradientOptions?.start?.x || 0, y:linearGradientOptions?.start?.y || 0},
       end: {x:linearGradientOptions?.end?.x || 0, y:linearGradientOptions?.end?.y || 0},
-      colors: linearGradientOptions?.colors || ['#fff', '#fff']
+      colors: linearGradientOptions?.colors && linearGradientOptions?.colors?.length > 0 ? linearGradientOptions?.colors : ['#fff', '#fff']
     }
 
     const body = (
