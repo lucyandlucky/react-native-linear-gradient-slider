@@ -554,6 +554,14 @@ export default class MultiSlider extends React.Component {
       });
     }
 
+    // LinearGradientOptions
+    const {linearGradientOptions} = this.props
+    const nextLinearGradientOptions = {
+      start: {x:linearGradientOptions?.start?.x || 0, y:linearGradientOptions?.start?.y || 0},
+      end: {x:linearGradientOptions?.end?.y || 0, y:linearGradientOptions?.end?.y || 0},
+      colors: linearGradientOptions.colors || []
+    }
+
     const body = (
       <React.Fragment>
         <View style={[styles.fullTrack, { width: sliderLength }]}>
@@ -567,9 +575,9 @@ export default class MultiSlider extends React.Component {
           /> */}
           {/* Track */}
           <LinearGradient
-            start={{ x: 0, y: 0 }}
-            end={{ x: 0.6, y: 0 }}
-            colors={['#59EBB0', '#5652FF']}
+            start={nextLinearGradientOptions.start}
+            end={nextLinearGradientOptions.end}
+            colors={nextLinearGradientOptions.colors}
             style={[
               styles.track,
               this.props.trackStyle,

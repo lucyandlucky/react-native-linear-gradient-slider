@@ -35,6 +35,12 @@ export interface LabelProps {
     twoMarkerPressed: boolean;
 }
 
+export interface LinearGradientOptions {
+  start: {x: number, y: number};
+  end: {x:number, y: number};
+  colors: Array<string>;
+}
+
 export interface LinearGradientSliderSliderProps {
     values?: number[];
 
@@ -64,6 +70,8 @@ export interface LinearGradientSliderSliderProps {
     stepsAs?: StepsAsProps[];
 
     optionsArray?: number[];
+    
+    linearGradientOptions: LinearGradientOptions
 
     containerStyle?: ViewStyle;
     trackStyle?: ViewStyle;
