@@ -1,6 +1,6 @@
 {
   "name": "react-native-lucy-linear-gradient-slider",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Android and iOS supported pure JS slider component with linear-gradient",
   "main": "MultiSlider.js",
   "types": "index.d.ts",
