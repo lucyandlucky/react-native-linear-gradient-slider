@@ -20,9 +20,9 @@ export default class MultiSlider extends React.Component {
   static defaultProps = {
     values: [0],
     onValuesChangeStart: () => {},
-    onValuesChange: (values) => {},
-    onValuesChangeFinish: (values) => {},
-    onMarkersPosition: (values) => {},
+    onValuesChange: values => {},
+    onValuesChangeFinish: values => {},
+    onMarkersPosition: values => {},
     step: 1,
     min: 0,
     max: 10,
@@ -74,7 +74,7 @@ export default class MultiSlider extends React.Component {
       createArray(this.props.min, this.props.max, this.props.step);
     this.stepLength = this.props.sliderLength / (this.optionsArray.length - 1);
 
-    var initialValues = this.props.values.map((value) =>
+    var initialValues = this.props.values.map(value =>
       valueToPosition(
         value,
         this.optionsArray,
@@ -84,7 +84,7 @@ export default class MultiSlider extends React.Component {
     );
 
     var tempStepsAs = {};
-    this.props.stepsAs.forEach((step) => {
+    this.props.stepsAs.forEach(step => {
       if (step?.index !== undefined) {
         tempStepsAs[step?.index] = step;
       }
@@ -138,15 +138,15 @@ export default class MultiSlider extends React.Component {
     };
 
     this._panResponderBetween = customPanResponder(
-      (gestureState) => {
+      gestureState => {
         this.startOne(gestureState);
         this.startTwo(gestureState);
       },
-      (gestureState) => {
+      gestureState => {
         this.moveOne(gestureState);
         this.moveTwo(gestureState);
       },
-      (gestureState) => {
+      gestureState => {
         this.endOne(gestureState);
         this.endTwo(gestureState);
       },
@@ -182,7 +182,7 @@ export default class MultiSlider extends React.Component {
     }
   };
 
-  moveOne = (gestureState) => {
+  moveOne = gestureState => {
     if (!this.props.enabledOne) {
       return;
     }
@@ -255,7 +255,7 @@ export default class MultiSlider extends React.Component {
     }
   };
 
-  moveTwo = (gestureState) => {
+  moveTwo = gestureState => {
     if (!this.props.enabledTwo) {
       return;
     }
@@ -324,7 +324,7 @@ export default class MultiSlider extends React.Component {
     }
   };
 
-  endOne = (gestureState) => {
+  endOne = gestureState => {
     if (gestureState.moveX === 0 && this.props.onToggleOne) {
       this.props.onToggleOne();
       return;
@@ -352,7 +352,7 @@ export default class MultiSlider extends React.Component {
     );
   };
 
-  endTwo = (gestureState) => {
+  endTwo = gestureState => {
     if (gestureState.moveX === 0 && this.props.onToggleTwo) {
       this.props.onToggleTwo();
       return;
@@ -380,8 +380,10 @@ export default class MultiSlider extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { positionOne: prevPositionOne, positionTwo: prevPositionTwo } =
-      prevState;
+    const {
+      positionOne: prevPositionOne,
+      positionTwo: prevPositionTwo,
+    } = prevState;
 
     const { positionOne, positionTwo } = this.state;
 
@@ -463,12 +465,10 @@ export default class MultiSlider extends React.Component {
     return this.optionsArray.map((number, index) => {
       var step = this.stepsAs[index];
 
-      const activeStyle = this.props.activeStepLabelStyle || {}
+      const activeStyle = this.props.activeStepLabelStyle || {};
       const active = step?.stepLabel === currentValue;
 
-      const nextTextStyle = active
-        ? activeStyle
-        : {};
+      const nextTextStyle = active ? activeStyle : {};
       const activePos = {
         left: index === 0 ? 0 : stepLength * index - 3,
       };
@@ -528,8 +528,12 @@ export default class MultiSlider extends React.Component {
 
     const Label = this.props.customLabel;
 
-    const { slipDisplacement, height, width, borderRadius } =
-      this.props.touchDimensions;
+    const {
+      slipDisplacement,
+      height,
+      width,
+      borderRadius,
+    } = this.props.touchDimensions;
     const touchStyle = {
       borderRadius: borderRadius || 0,
       ...(height && { height }),
@@ -555,44 +559,44 @@ export default class MultiSlider extends React.Component {
     }
 
     // LinearGradientOptions
-    const {linearGradientOptions} = this.props
-    const nextLinearGradientOptions = {
-      start: {x:linearGradientOptions?.start?.x || 0, y:linearGradientOptions?.start?.y || 0},
-      end: {x:linearGradientOptions?.end?.x || 0, y:linearGradientOptions?.end?.y || 0},
-      colors: linearGradientOptions?.colors && linearGradientOptions?.colors?.length > 0 ? linearGradientOptions?.colors : ['#fff', '#fff']
-    }
+    const {
+      unselectedLinearGradientOptions = {
+        colors: ['#fff', '#fff'],
+        start: { x: 0, y: 0 },
+        end: { x: 1, y: 0 },
+      },
+      selectedLinearGradientOptions = {
+        colors: ['#fff', '#fff'],
+        start: { x: 0, y: 0 },
+        end: { x: 1, y: 0 },
+      },
+    } = this.props;
 
     const body = (
       <React.Fragment>
         <View style={[styles.fullTrack, { width: sliderLength }]}>
-          {/* <View
+          <LinearGradient
+            start={selectedLinearGradientOptions.start}
+            end={selectedLinearGradientOptions.end}
+            colors={selectedLinearGradientOptions.colors}
             style={[
               styles.track,
-              this.props.trackStyle,
               trackOneStyle,
+              this.props.trackStyle,
               { width: trackOneLength },
             ]}
-          /> */}
-          {/* Track */}
-          <LinearGradient
-            start={nextLinearGradientOptions.start}
-            end={nextLinearGradientOptions.end}
-            colors={nextLinearGradientOptions.colors}
-            style={[
-              styles.track,
-              this.props.trackStyle,
-              trackTwoStyle,
-              { width: sliderLength },
-            ]}
           />
-          {/* <View
+          <LinearGradient
+            start={unselectedLinearGradientOptions.start}
+            end={unselectedLinearGradientOptions.end}
+            colors={unselectedLinearGradientOptions.colors}
             style={[
               styles.track,
-              this.props.trackStyle,
               trackTwoStyle,
+              this.props.trackStyle,
               { width: trackTwoLength },
             ]}
-          /> */}
+          />
           {this.props.showSteps && this.getSteps(this.state.valueOne)}
           <View
             style={[
@@ -604,7 +608,7 @@ export default class MultiSlider extends React.Component {
           >
             <View
               style={[styles.touch, touchStyle]}
-              ref={(component) => (this._markerOne = component)}
+              ref={component => (this._markerOne = component)}
               {...this._panResponderOne.panHandlers}
             >
               {isMarkersSeparated === false ? (
@@ -642,7 +646,7 @@ export default class MultiSlider extends React.Component {
             >
               <View
                 style={[styles.touch, touchStyle]}
-                ref={(component) => (this._markerTwo = component)}
+                ref={component => (this._markerTwo = component)}
                 {...this._panResponderTwo.panHandlers}
               >
                 {isMarkersSeparated === false ? (
@@ -717,7 +721,6 @@ const styles = StyleSheet.create({
   track: {
     height: 6,
     borderRadius: 6,
-    backgroundColor: '#A7A7A7',
   },
   selectedTrack: {
     backgroundColor: '#095FFF',

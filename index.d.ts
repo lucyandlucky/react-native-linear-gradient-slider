@@ -41,7 +41,7 @@ export interface LinearGradientOptions {
   colors: Array<string>;
 }
 
-export interface LinearGradientSliderSliderProps {
+export interface LinearGradientSliderProps {
     values?: number[];
 
     onValuesChange?: (values: number[]) => void;
@@ -71,7 +71,8 @@ export interface LinearGradientSliderSliderProps {
 
     optionsArray?: number[];
     
-    linearGradientOptions: LinearGradientOptions
+    unselectedLinearGradientOptions?: LinearGradientOptions
+    selectedLinearGradientOptions?: LinearGradientOptions
 
     containerStyle?: ViewStyle;
     trackStyle?: ViewStyle;
@@ -105,4 +106,4 @@ export interface LinearGradientSliderSliderProps {
     vertical?: boolean;
 }
 
-export default class LinearGradientSlider extends React.Component<LinearGradientSliderSliderProps> {}
+export default class LinearGradientSlider extends React.Component<LinearGradientSliderProps> {}
