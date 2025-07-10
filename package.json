@@ -6,7 +6,7 @@
   "types": "index.d.ts",
   "scripts": {
     "prettier": "prettier --write \"**/*.js\"",
-    "watch": "nodemon --ignore dist/ --ignore node_modules/ --ignore lib/ --watch . -C -e js,jsx,ts,tsx,css,less -x 'yalc push'"
+   "watch": "nodemon --ignore dist/ --ignore node_modules/ --ignore lib/ --watch . -C -e js,jsx,ts,tsx,css,less -x 'yalc push'"
   },
   "repository": {
     "type": "git",
