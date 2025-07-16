@@ -572,6 +572,9 @@ export default class MultiSlider extends React.Component {
       },
     } = this.props;
 
+    const nextTrackOneLength = trackOneLength === 0 ? 1 : trackOneLength;
+    const nextTrackTwoLength = trackTwoLength === 0 ? 1 : trackTwoLength;
+
     const body = (
       <React.Fragment>
         <View style={[styles.fullTrack, { width: sliderLength }]}>
@@ -583,18 +586,15 @@ export default class MultiSlider extends React.Component {
               styles.track,
               trackOneStyle,
               this.props.trackStyle,
-              { width: trackOneLength },
+              { width: nextTrackOneLength },
             ]}
           />
-          <LinearGradient
-            start={unselectedLinearGradientOptions.start}
-            end={unselectedLinearGradientOptions.end}
-            colors={unselectedLinearGradientOptions.colors}
+          <View
             style={[
               styles.track,
               trackTwoStyle,
               this.props.trackStyle,
-              { width: trackTwoLength },
+              { width: trackTwoLength, backgroundColor: '#25293B' },
             ]}
           />
           {this.props.showSteps && this.getSteps(this.state.valueOne)}
