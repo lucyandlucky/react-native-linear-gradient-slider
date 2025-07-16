@@ -1,12 +1,12 @@
 {
   "name": "react-native-linear-gradient-slider",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Android and iOS supported pure JS slider component with linear-gradient",
   "main": "MultiSlider.js",
   "types": "index.d.ts",
   "scripts": {
     "prettier": "prettier --write \"**/*.js\"",
-   "watch": "nodemon --ignore dist/ --ignore node_modules/ --ignore lib/ --watch . -C -e js,jsx,ts,tsx,css,less -x 'yalc push'"
+    "watch": "nodemon --ignore dist/ --ignore node_modules/ --ignore lib/ --watch . -C -e js,jsx,ts,tsx,css,less -x 'yalc push'"
   },
   "repository": {
     "type": "git",
