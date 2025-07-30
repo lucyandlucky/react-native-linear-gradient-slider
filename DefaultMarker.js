@@ -17,6 +17,7 @@ class DefaultMarker extends React.Component {
               : [
                   styles.markerStyle,
                   styles.disabled,
+                  this.props.markerStyle,
                   this.props.disabledMarkerStyle,
                 ]
           }
@@ -33,9 +34,6 @@ const styles = StyleSheet.create({
     height: thumbSize,
     width: thumbSize,
     borderRadius: thumbSize,
-    borderWidth: 3,
-    borderColor: '#5652FF',
-    backgroundColor: '#FFFFFF',
   },
   pressedMarkerStyle: {},
   disabled: {

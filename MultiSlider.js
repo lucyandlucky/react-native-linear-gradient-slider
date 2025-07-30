@@ -559,6 +559,7 @@ export default class MultiSlider extends React.Component {
     }
 
     // LinearGradientOptions
+    // TODO:  Two LinearGradient
     const {
       unselectedLinearGradientOptions = {
         colors: ['#fff', '#fff'],
@@ -594,7 +595,8 @@ export default class MultiSlider extends React.Component {
               styles.track,
               trackTwoStyle,
               this.props.trackStyle,
-              { width: trackTwoLength, backgroundColor: '#25293B' },
+              { width: trackTwoLength },
+              unselectedStyle,
             ]}
           />
           {this.props.showSteps && this.getSteps(this.state.valueOne)}
