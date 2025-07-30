@@ -1,6 +1,6 @@
 {
   "name": "react-native-linear-gradient-slider",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Android and iOS supported pure JS slider component with linear-gradient",
   "main": "MultiSlider.js",
   "types": "index.d.ts",
